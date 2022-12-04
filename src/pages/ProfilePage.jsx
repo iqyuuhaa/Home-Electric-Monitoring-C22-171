@@ -1,3 +1,9 @@
-const ProfilePage = () => {}
+const ProfilePage = () => {
+    return (
+        <>
+            "Profile"
+        </>
+    )
+}
 
 export default ProfilePage
