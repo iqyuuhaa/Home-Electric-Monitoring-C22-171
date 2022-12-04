@@ -1,6 +1,6 @@
 import { Outlet, Navigate } from "react-router-dom"
 
-import { UserConsumer } from './../utils/contexts/user'
+import { UserConsumer } from "./../utils/contexts/UserConsumer"
 import { getAccessToken } from "./../utils/network-data"
 
 const ProtectedRoute = () => {
