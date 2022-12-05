@@ -132,7 +132,7 @@ class App extends React.Component {
 		return !this.state.initializing ? (
 			<ChakraProvider>
 				<UserProvider value={ this.state.user }>
-					<MainRoute />
+					<MainRoute setAuthenticatedUser={this.setAuthenticatedUser}/>
 				</UserProvider>
 			</ChakraProvider>
 		) : null
