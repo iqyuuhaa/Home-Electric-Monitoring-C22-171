@@ -1,7 +1,7 @@
 import DataTable from "./../components/DataTable"
 import ModifyBreadcrumb from "./../components/Breadcrumb"
 
-import LogData from "./../utils/data/log"
+import { getActivities } from "./../utils/local-data"
 
 const LogPage = () => {
     const breadcrumbData = [
@@ -12,6 +12,16 @@ const LogPage = () => {
         }
     ]
 
+    const activities = JSON.parse(getActivities())
+    const logData = activities.sort((a, b) => {
+        return b["time"].localeCompare(a["time"]);
+    }).map((x, i) => {
+        return {
+            ...x,
+            no: i+1
+        }
+    });
+    
     const columns = [
         {
             Header: "No",
@@ -34,7 +44,7 @@ const LogPage = () => {
     return (
         <>
             <ModifyBreadcrumb data={ breadcrumbData } />
-            <DataTable columns={ columns } data={ LogData }  />
+            <DataTable columns={ columns } data={ logData }  />
         </>
     )
 }

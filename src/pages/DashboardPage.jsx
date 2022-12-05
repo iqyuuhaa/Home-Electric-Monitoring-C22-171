@@ -1,12 +1,11 @@
 import { Link } from "react-router-dom"
-import { Box, Grid, GridItem, Text, Button, Switch } from '@chakra-ui/react'
+import { Box, Grid, GridItem, Text, Button, Switch, Image, FormControl } from '@chakra-ui/react'
 import { Bar, PolarArea } from 'react-chartjs-2'
 import { faker } from "@faker-js/faker"
 
 import DataTable from "./../components/DataTable"
 import ModifyBreadcrumb from "./../components/Breadcrumb"
-
-import LogData from "./../utils/data/log"
+import { getActivities, getToolActivities } from "./../utils/local-data"
 
 const DashboardPage = () => {
     const breadcrumbData = [
@@ -60,7 +59,27 @@ const DashboardPage = () => {
         ],
     }
 
-    const logData = LogData.slice(0, 5)
+    const tools = JSON.parse(getToolActivities())
+    const getTopFiveLog = () => {
+        const currrentActivities = getActivities()
+        const activities = JSON.parse(currrentActivities)
+        if (activities.length > 0) {
+            const logData = activities.sort((a, b) => {
+                return b["time"].localeCompare(a["time"]);
+            }).map((x, i) => {
+                return {
+                    ...x,
+                    no: i+1
+                }
+            });
+
+            return logData.slice(0, 5)
+        }
+        
+        return activities
+    }
+
+    const logData = getTopFiveLog()
     const logColumns = [
         {
             Header: "No",
@@ -101,36 +120,60 @@ const DashboardPage = () => {
                         <Text fontWeight={ "bold" } mb={ 5 }>Device Status</Text>
                         <Grid templateColumns='repeat(8, 1fr)' templateRows='repeat(4, 1fr)' gap={ 2 }>
                             <GridItem mb={ 4 } rowSpan={ 4 } colSpan={ [8,4,4,4,4] } >
-                                <Text fontWeight={ "bold" } mb={ 5 }>Lamp #1</Text>
-                                <Switch isDisabled />
+                                <Image src="./images/lamp.png" boxSize="50px" mb={ 5 } alt="Lamp #1" />
+                                <FormControl display='flex' alignItems='center'>
+                                    <Switch isDisabled defaultChecked={ tools.lamp.one } />
+                                    <Text fontWeight={ "bold" } ml={ 3 }>Lamp #1</Text>
+                                </FormControl>
                             </GridItem>
                             <GridItem mb={ 4 } rowSpan={ 4 } colSpan={ [8,4,4,4,4] } >
-                                <Text fontWeight={ "bold" } mb={ 5 }>Lamp #2</Text>
-                                <Switch isDisabled />
+                                <Image src="./images/lamp.png" boxSize="50px" mb={ 5 } alt="Lamp #2" />
+                                <FormControl display='flex' alignItems='center'>
+                                    <Switch isDisabled defaultChecked={ tools.lamp.two } />
+                                    <Text fontWeight={ "bold" } ml={ 3 }>Lamp #2</Text>
+                                </FormControl>
                             </GridItem>
                             <GridItem mb={ 4 } rowSpan={ 4 } colSpan={ [8,4,4,4,4] } >
-                                <Text fontWeight={ "bold" } mb={ 5 }>Lamp #3</Text>
-                                <Switch isDisabled defaultChecked />
+                                <Image src="./images/lamp.png" boxSize="50px" mb={ 5 } alt="Lamp #3" />
+                                <FormControl display='flex' alignItems='center'>
+                                    <Switch isDisabled defaultChecked={ tools.lamp.three } />
+                                    <Text fontWeight={ "bold" } ml={ 3 }>Lamp #3</Text>
+                                </FormControl>
                             </GridItem>
                             <GridItem mb={ 4 } rowSpan={ 4 } colSpan={ [8,4,4,4,4] } >
-                                <Text fontWeight={ "bold" } mb={ 5 }>Washing Machine</Text>
-                                <Switch isDisabled defaultChecked />
+                                <Image src="./images/washing-machine.png" boxSize="50px" mb={ 5 } alt="Washing Machine" />
+                                <FormControl display='flex' alignItems='center'>
+                                    <Switch isDisabled defaultChecked={ tools.washingMachine } />
+                                    <Text fontWeight={ "bold" } ml={ 3 }>Washing Machine</Text>
+                                </FormControl>
                             </GridItem>
                             <GridItem mb={ 4 } rowSpan={ 4 } colSpan={ [8,4,4,4,4] } >
-                                <Text fontWeight={ "bold" } mb={ 5 }>Television</Text>
-                                <Switch isDisabled defaultChecked />
+                                <Image src="./images/tv-show.png" boxSize="50px" mb={ 5 } alt="Television" />
+                                <FormControl display='flex' alignItems='center'>
+                                    <Switch isDisabled defaultChecked={ tools.television } />
+                                    <Text fontWeight={ "bold" } ml={ 3 }>Television</Text>
+                                </FormControl>
                             </GridItem>
                             <GridItem mb={ 4 } rowSpan={ 4 } colSpan={ [8,4,4,4,4] } >
-                                <Text fontWeight={ "bold" } mb={ 5 }>Air Conditioning</Text>
-                                <Switch isDisabled />
-                            </GridItem>
-                            <GridItem mb={ 4 }rowSpan={ 4 } colSpan={ [8,4,4,4,4] } >
-                                <Text fontWeight={ "bold" } mb={ 5 }>Plant Watering Machine</Text>
-                                <Switch isDisabled defaultChecked />
+                                <Image src="./images/air-conditioner.png" boxSize="50px" mb={ 5 } alt="Air Conditioner" />
+                                <FormControl display='flex' alignItems='center'>
+                                    <Switch isDisabled defaultChecked={ tools.airConditioner } />
+                                    <Text fontWeight={ "bold" } ml={ 3 }>Air Conditioner</Text>
+                                </FormControl>
                             </GridItem>
                             <GridItem mb={ 4 } rowSpan={ 4 } colSpan={ [8,4,4,4,4] } >
-                                <Text fontWeight={ "bold" } mb={ 5 }>Water Tank Machine</Text>
-                                <Switch isDisabled defaultChecked />
+                                <Image src="./images/watering-plant.png" boxSize="50px" mb={ 5 } alt="Plant Watering Machine" />
+                                <FormControl display='flex' alignItems='center'>
+                                    <Switch isDisabled defaultChecked={ tools.plantWateringMachine } />
+                                    <Text fontWeight={ "bold" } ml={ 3 }>Plant Watering Machine</Text>
+                                </FormControl>
+                            </GridItem>
+                            <GridItem mb={ 4 } rowSpan={ 4 } colSpan={ [8,4,4,4,4] } >
+                                <Image src="./images/water-tank.png" boxSize="50px" mb={ 5 } alt="Water Tank Machine" />
+                                <FormControl display='flex' alignItems='center'>
+                                    <Switch isDisabled defaultChecked={ tools.waterTankMachine } />
+                                    <Text fontWeight={ "bold" } ml={ 3 }>Water Tank Machine</Text>
+                                </FormControl>
                             </GridItem>
                         </Grid>
                         <Link to={ "/control" }>
