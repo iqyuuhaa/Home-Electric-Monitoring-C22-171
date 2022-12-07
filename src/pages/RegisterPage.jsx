@@ -2,6 +2,7 @@ import React from "react"
 import { Link, useNavigate } from "react-router-dom"
 import RegisterInput from "../components/RegisterInput"
 import { register } from "../utils/network-data"
+import { Box, Flex } from '@chakra-ui/react'
 
 const RegisterPage = () => {
     const nav = useNavigate()
@@ -9,16 +10,20 @@ const RegisterPage = () => {
     async function onRegisterHandler(user) {
         const { error } = await register(user)
         if (!error) {
-            nav('/')
+            nav('/login')
         }
       }
      
       return (
-        <section className='register-page'>
-          <h2>Register Page</h2>
+        <Flex minHeight='100vh' width='full' align='center' justifyContent='center'>
+        <Box borderWidth={1} px={4} width='full' maxWidth='500px' borderRadius={4} textAlign='center' boxShadow='lg'>
+          <Box p={4}>
+          <h1>Register Page</h1>
           <RegisterInput register={onRegisterHandler} />
-          <p>Have an Account?<Link to="/">Login</Link></p>
-        </section>
+          <p>Have an Account?<Link to="/login">Login</Link></p>
+          </Box>
+        </Box>
+      </Flex>
       )
 }
 

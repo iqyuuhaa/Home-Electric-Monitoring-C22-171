@@ -1,5 +1,6 @@
 import React from 'react';
- 
+import { Box, Link, FormControl, FormLabel, Input, Stack, Checkbox, Button} from '@chakra-ui/react'
+
 class LoginInput extends React.Component {
   constructor(props) {
     super(props);
@@ -41,11 +42,31 @@ class LoginInput extends React.Component {
  
   render() {
     return (
-      <form onSubmit={this.onSubmitHandler} className='input-login'>
-        <input type="email" placeholder='Email' value={this.state.email} onChange={this.onEmailChangeHandler} />
-        <input type="password" placeholder='Password' value={this.state.password} onChange={this.onPasswordChangeHandler} />
-        <button>Login</button>
+      <Box my={8} textAlign='left'>
+      <form onSubmit={this.onSubmitHandler} >
+        <FormControl>
+          <FormLabel>Email address</FormLabel>
+          <Input type='email' placeholder='Enter your email address' value={this.state.email} onChange={this.onEmailChangeHandler} />
+        </FormControl>
+
+        <FormControl mt={4}>
+          <FormLabel>Password</FormLabel>
+          <Input type='password' placeholder='Enter your password' value={this.state.password} onChange={this.onPasswordChangeHandler}/>
+        </FormControl>
+
+        <Stack isInline justifyContent='space-between' mt={4}>
+            <Box>
+              <Checkbox>Remember Me</Checkbox>
+            </Box>
+            <Box>
+              <Link color={`teal.300`}>Forgot your password?</Link>
+            </Box>
+        </Stack>
+
+        <Button variantcolor='teal'  width='full' mt={4} type='submit'>Sign In</Button>
       </form>
+    </Box>
+
     );
   }
 }

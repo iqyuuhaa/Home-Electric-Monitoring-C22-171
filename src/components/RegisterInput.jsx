@@ -1,5 +1,6 @@
 import React from 'react';
- 
+import { Box, FormControl, FormLabel, Input, Button} from '@chakra-ui/react'
+
 class RegisterInput extends React.Component {
   constructor(props) {
     super(props)
@@ -52,12 +53,27 @@ class RegisterInput extends React.Component {
  
   render() {
     return (
-      <form onSubmit={this.onSubmitHandler} className='input-register'>
-        <input type="text" placeholder="Nama" value={this.state.name} onChange={this.onNameChange} />
-        <input type="email" placeholder="Email" value={this.state.email} onChange={this.onEmailChange} />
-        <input type="password" placeholder="Password" autoComplete='current-password' value={this.state.password} onChange={this.onPasswordChange} />
-        <button>Register</button>
+      <Box my={8} textAlign='left'>
+      <form onSubmit={this.onSubmitHandler} >
+
+        <FormControl>
+          <FormLabel>Your Name</FormLabel>
+          <Input type='text' placeholder='Enter your name' value={this.state.name} onChange={this.onNameChange} />
+        </FormControl>
+
+        <FormControl>
+          <FormLabel>Email address</FormLabel>
+          <Input type='email' placeholder='Enter your email address' value={this.state.email} onChange={this.onEmailChange} />
+        </FormControl>
+
+        <FormControl mt={4}>
+          <FormLabel>Password</FormLabel>
+          <Input type='password' placeholder="Enter your new Password" autoComplete='current-password' value={this.state.password} onChange={this.onPasswordChange}/>
+        </FormControl>
+
+        <Button variantcolor='teal'  width='full' mt={4} type='submit'>Register</Button>
       </form>
+    </Box>
     )
   }
 }
