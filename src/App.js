@@ -17,7 +17,11 @@ import {
 import MainRoute from "./routes/MainRoute"
 
 import { getAccessToken, getUserLogged, putAccessToken } from "./utils/network-data"
+import { getActivities, setActivities, getToolActivities, setToolActivities } from "./utils/local-data"
 import { UserProvider } from "./utils/contexts/UserConsumer"
+
+import LogData from "./utils/data/log"
+import ToolActivitesData from "./utils/data/tool"
 
 ChartJS.register(
     CategoryScale,
@@ -45,9 +49,7 @@ class App extends React.Component {
                     name: "",
                     email: "",
                 },
-                logout: this.handleLogout,
-				setAuthenticatedUser: this.setAuthenticatedUser,
-				getAuthenticatedUser: this.getAuthenticatedUser
+                logout: this.handleLogout
             }
         }
         
@@ -57,6 +59,10 @@ class App extends React.Component {
     }
 
 	async componentDidMount() {
+        // To populate dummy data purposes
+        this.populateActivities()
+        this.populateTools()
+
         await this.handleOnLoadUser()
 
         this.setState((prevState) => {
@@ -65,6 +71,20 @@ class App extends React.Component {
                 initializing: false,
             }
         })
+    }
+
+    populateActivities = () => {
+        const activities = getActivities()
+        if (activities === undefined || activities === null || activities.length === 0) {
+            setActivities(LogData)
+        }
+    }
+
+    populateTools = () => {
+        const tools = getToolActivities()
+        if (tools === undefined || tools === null || tools.length === 0) {
+            setToolActivities(ToolActivitesData)
+        }
     }
 
 	handleOnLoadUser = async () => {

@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react"
-import { Link, useLocation, useParams } from "react-router-dom"
+import React, { useContext, useState, useEffect } from "react"
+import { Link, useLocation, useParams, useNavigate } from "react-router-dom"
 import {
   IconButton,
   Avatar,
@@ -23,6 +23,7 @@ import { FiMenu, FiBell, FiChevronDown, FiUserCheck, FiLogOut } from "react-icon
 
 import { DynamicFaIcon } from "./DynamicIcon"
 import SidebarMenuData from "./../utils/data/sidebar"
+import { UserContext } from "./../utils/contexts/UserConsumer"
 
 const Sidebar = ({ props }) => {
     const { isOpen, onOpen, onClose } = useDisclosure();
@@ -105,6 +106,13 @@ const NavName = ({ children, icon, linkto, bgColor, textColor, ...rest }) => {
 };
 
 const MobileNav = ({ onOpen, handleLogout, ...rest }) => {
+    const navigate = useNavigate()
+    const user = useContext(UserContext)
+    const onLogout = async () => {
+        await user.logout()
+        navigate("/login")
+    }
+
     return (
         <Flex
             ml={{ base: 0, md: 60 }}
@@ -113,7 +121,7 @@ const MobileNav = ({ onOpen, handleLogout, ...rest }) => {
             alignItems="center"
             bg="#1c1c1c"
             borderBottomWidth="1px"
-            borderBottomColor={useColorModeValue("gray.200", "gray.700")}
+            borderBottomColor={ useColorModeValue("gray.200", "gray.700") }
             justifyContent={{ base: "space-between", md: "flex-end" }}
             {...rest}
         >
@@ -129,15 +137,15 @@ const MobileNav = ({ onOpen, handleLogout, ...rest }) => {
                             <HStack>
                                 <Avatar size={ "sm" } />
                                 <VStack display={{ base: "none", md: "flex" }} alignItems="flex-start" spacing="1px" ml="2">
-                                    <Text fontSize="sm" color="#ffffff">Justina Clark</Text>
-                                    <Text fontSize="xs" color="#ffffff">Admin</Text>
+                                    <Text fontSize="sm" color="#ffffff">{ user.data.name }</Text>
+                                    <Text fontSize="xs" color="#ffffff">{ user.data.email }</Text>
                                 </VStack>
                                 <Box display={{ base: "none", md: "flex" }}>
                                     <FiChevronDown color="#ffffff" />
                                 </Box>
                             </HStack>
                         </MenuButton>
-                        <MenuList bg={ useColorModeValue("white", "gray.900") } borderColor={useColorModeValue("gray.200", "gray.700")}>
+                        <MenuList bg={ useColorModeValue("white", "gray.900") } borderColor={ useColorModeValue("gray.200", "gray.700") }>
                             <Link to={ "/profile" }>
                                 <MenuItem>
                                     <FiUserCheck />
@@ -145,7 +153,7 @@ const MobileNav = ({ onOpen, handleLogout, ...rest }) => {
                                 </MenuItem>
                             </Link>
                             <MenuDivider />
-                            <MenuItem onClick={ handleLogout }>
+                            <MenuItem onClick={ () => { onLogout() } }>
                                 <FiLogOut />
                                 <Text ml="4">Sign out</Text>
                             </MenuItem>
