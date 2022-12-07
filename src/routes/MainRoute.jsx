@@ -15,13 +15,13 @@ import NotFoundPage from "../pages/NotFoundPage"
 
 import { ProtectedRoute } from "./RouteHelper"
 
-const MainRoute = () => {
+const MainRoute = ({setAuthenticatedUser}) => {
     return (
         <BrowserRouter>
             <Routes>
                 <Route path="/"  element={ <HomePage /> } />
                 <Route path="/*" element={ <NotFoundPage /> } />
-                <Route path="/login" element={ <LoginPage /> } />
+                <Route path="/login" element={ <LoginPage setAuthenticatedUser={setAuthenticatedUser}/> } />
                 <Route path="/register" element={ <RegisterPage /> } />
 
                 <Route element={ <ProtectedRoute /> }>
