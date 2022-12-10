@@ -1,4 +1,4 @@
-import { useContext } from "react"
+import { useContext, useState } from "react"
 import { useToast, Box, Grid, GridItem, Text, Switch, Image, FormControl, FormLabel } from '@chakra-ui/react'
 
 import ModifyBreadcrumb from "./../components/Breadcrumb"
@@ -17,7 +17,7 @@ const ControlPage = () => {
     ]
 
     const user = useContext(UserContext)
-    let tools = JSON.parse(getToolActivities())
+    let [tools, setTools] = useState(JSON.parse(getToolActivities()))
 
     const onSwitchLampOne = () => {
         toast({
@@ -42,6 +42,7 @@ const ControlPage = () => {
             }
         }
         setToolActvity(tools)
+        setTools(tools)
     }
 
     const onSwitchLampTwo = () => {
@@ -67,6 +68,7 @@ const ControlPage = () => {
             }
         }
         setToolActvity(tools)
+        setTools(tools)
     }
 
     const onSwitchLampThree = () => {
@@ -92,6 +94,7 @@ const ControlPage = () => {
             }
         }
         setToolActvity(tools)
+        setTools(tools)
     }
 
     const onSwitchWashingMachine = () => {
@@ -114,6 +117,7 @@ const ControlPage = () => {
             washingMachine: !tools.washingMachine
         }
         setToolActvity(tools)
+        setTools(tools)
     }
 
     const onSwitchTelevision = () => {
@@ -136,6 +140,7 @@ const ControlPage = () => {
             television: !tools.television
         }
         setToolActvity(tools)
+        setTools(tools)
     }
 
     const onSwitchAirConditioner = () => {
@@ -158,6 +163,7 @@ const ControlPage = () => {
             airConditioner: !tools.airConditioner
         }
         setToolActvity(tools)
+        setTools(tools)
     }
 
     const onSwitchWaterTankMachine = () => {
@@ -180,6 +186,7 @@ const ControlPage = () => {
             waterTankMachine: !tools.waterTankMachine
         }
         setToolActvity(tools)
+        setTools(tools)
     }
 
     const onSwitchPlantWateringMachine = () => {
@@ -202,6 +209,7 @@ const ControlPage = () => {
             plantWateringMachine: !tools.plantWateringMachine
         }
         setToolActvity(tools)
+        setTools(tools)
     }
 
     return (
