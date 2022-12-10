@@ -2,10 +2,11 @@ import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import LoginInput from '../components/LoginInput';
 import { login, getUserLogged, putAccessToken } from './../utils/network-data'
-import { Box, Flex } from '@chakra-ui/react'
+import { useToast, Box, Flex } from '@chakra-ui/react'
 
 const LoginPage = ({ setAuthenticatedUser }) => {
   const nav = useNavigate()
+  const toast = useToast()
 
   async function onLogin({ email, password }) {
         const { error, data } = await login({ email, password });
@@ -17,6 +18,14 @@ const LoginPage = ({ setAuthenticatedUser }) => {
             if (!respon.error) {
                 setAuthenticatedUser(respon.data)
                 nav('/dashboard')
+                toast({
+                  title: "Success",
+                  description: `Welcome ${respon.data.name}`,
+                  position: "bottom-right",
+                  status: 'success',
+                  duration: 3000,
+                  isClosable: true,
+              })
             }
         }
         
